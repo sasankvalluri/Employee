@@ -1,7 +1,30 @@
 # Employee
 Rest API CRUD operations on Employee Database .
+Prequisites     : Git,install flyway, IDE , Setup the DB. 
+Database info
+Database        :Employee
+Table           :Users
+Columns         :id, first name, lastname, date of joining, date of exit, designation
+DB Script       : 
+{
+create database Employee;
+create table Employee.users(
+id int NOT NULL AUTO_INCREMENT primary key,
+first_name varchar(50) NOT NULL,
+last_name varchar(50) ,
+date_of_joining date,
+date_of_exit date,
+designation varchar(50));
 
-The database is having emp name, id, first name, lastname, date of joining, date of exit, designation as columns.
+insert into employee.users(first_name,last_name,date_of_joining,designation) values 
+('Sasank','Valluri','2019-05-21','Software developer');
+
+insert into employee.users(first_name,last_name,date_of_joining,designation) values 
+('Aaditya','Sri RAam','2018-07-25','Software developer');
+
+insert into employee.users(first_name,last_name,date_of_joining,designation) values 
+('Hello','World','2020-12-20','Trainee');
+}
 
 Run the Project :
 
