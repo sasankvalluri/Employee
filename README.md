@@ -9,9 +9,10 @@ Database info
 Database        :Employee
 Table           :Users
 Columns         :id, first name, lastname, date of joining, date of exit, designation
+
 DB Script       : 
 
-{
+
 create database Employee;
 create table Employee.users(
 id int NOT NULL AUTO_INCREMENT primary key,
@@ -29,7 +30,8 @@ insert into employee.users(first_name,last_name,date_of_joining,designation) val
 
 insert into employee.users(first_name,last_name,date_of_joining,designation) values 
 ('Hello','World','2020-12-20','Trainee');
-}
+
+
 
 Run the Project :
 
