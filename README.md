@@ -1,12 +1,16 @@
 # Employee
 Rest API CRUD operations on Employee Database .
+
 Note : configure Datasource.url,username and password in application.properties file under src/resources/application.properties according to your System properties.
+
 Prequisites     : Git,flyway, IDE , Setup the DB. 
+
 Database info
 Database        :Employee
 Table           :Users
 Columns         :id, first name, lastname, date of joining, date of exit, designation
 DB Script       : 
+
 {
 create database Employee;
 create table Employee.users(
