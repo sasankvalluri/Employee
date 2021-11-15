@@ -5,49 +5,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.kony.employee.model.Employee;
-import com.kony.employee.service.EmployeeService;
+import com.kony.employee.service.EmployeeServices;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class EmployeeController {
-	@Autowired
-    EmployeeService employeeService;
 	
+	@Autowired
+    EmployeeServices employeeServices;
+		
 	@GetMapping("")
-    public List<Employee> list() {
-        return employeeService.listAllUser();
+	public ResponseEntity<List<Employee>> listAllUser()  {
+		List<Employee> All = employeeServices.listAllUser();
+		return new ResponseEntity<>(All, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Employee> get(@PathVariable Integer id) {
-        try {
-            Employee employee = employeeService.getUser(id);
-            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Employee>(HttpStatus.NOT_FOUND);
-        }
+        Employee employee = employeeServices.getUser(id);
+        return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
+   
     @PostMapping("/")
     public void add(@RequestBody Employee employee) {
-        employeeService.saveUser(employee);
+        employeeServices.saveUser(employee);
     }
+   
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Employee employee, @PathVariable Integer id) {
-        try {
-            Employee existEmployee = employeeService.getUser(id);
-            employee.setId(id);            
-            employeeService.saveUser(employee);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Optional<Employee> updateEmployee( @PathVariable Integer id,@RequestBody Employee employee) {
+    	 return employeeServices.updateEmployee(id, employee);
     }
+    
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-
-        employeeService.deleteEmployee(id);
-    }
+        employeeServices.deleteEmployee(id);
+    }   
 }
