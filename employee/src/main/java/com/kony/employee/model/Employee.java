@@ -1,5 +1,6 @@
 package com.kony.employee.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -13,7 +14,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
-public class Employee {
+public class Employee implements Serializable{
+
+	   private static final long serialVersionUID = -4439114469417994311L;
 	    @Column(name="id")
 	    private int id;
 	  

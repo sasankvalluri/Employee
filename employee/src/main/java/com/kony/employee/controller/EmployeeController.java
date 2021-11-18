@@ -1,5 +1,7 @@
 package com.kony.employee.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +20,14 @@ public class EmployeeController {
 	@Autowired
     EmployeeServices employeeServices;
 		
+
 	@GetMapping("")
 	public ResponseEntity<List<Employee>> listAllUser()  {
 		List<Employee> All = employeeServices.listAllUser();
 		return new ResponseEntity<>(All, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+	@GetMapping("/{id}")
     public ResponseEntity<Employee> get(@PathVariable Integer id) {
         Employee employee = employeeServices.getUser(id);
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
