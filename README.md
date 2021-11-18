@@ -22,17 +22,6 @@ date_of_joining date,
 date_of_exit date,
 designation varchar(50));
 
-insert into employee.users(first_name,last_name,date_of_joining,designation) values 
-('Sasank','Valluri','2019-05-21','Software developer');
-
-insert into employee.users(first_name,last_name,date_of_joining,designation) values 
-('Aaditya','Sri RAam','2018-07-25','Software developer');
-
-insert into employee.users(first_name,last_name,date_of_joining,designation) values 
-('Hello','World','2020-12-20','Trainee');
-
-
-
 Run the Project :
 
 Open Command prompt -> cd project Location ( Make sure you are in the folder where pom.xml exist) 
