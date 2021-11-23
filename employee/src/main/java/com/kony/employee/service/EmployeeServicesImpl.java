@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import com.kony.employee.exceptions.EmployeeException;
 import com.kony.employee.model.Employee;
 import com.kony.employee.repository.EmployeeRepository;
 
@@ -35,55 +36,77 @@ public class EmployeeServicesImpl  implements EmployeeServices {
 	@Override
     @CacheEvict(value = "users",allEntries=true)
 	public Optional<Employee> updateEmployee(int employeeId, Employee employeeRequest) {
-		 Optional<Employee> employee = employeeRepository.findById(employeeId);
-		    if (employeeRequest.getFirstName()==null)    {
-		    	employee.get().setFirstName(employee.get().getFirstName());
-		    }
-		    else {
-		    	  employee.get().setFirstName(employeeRequest.getFirstName());	 	
-		    } 		 
-		    if (employeeRequest.getLastName()==null)    {
-		    	employee.get().setLastName (employee.get().getLastName());
-		    }
-		    else   {
-		      employee.get().setLastName(employeeRequest.getLastName());	
-		    }
-		    
-		    if (employeeRequest.getDesignation()==null) {
-		    	employee.get().setDesignation(employee.get().getDesignation());
-		    }
-		    else {
-		    	employee.get().setDesignation(employeeRequest.getDesignation());
-		    }
-		    
-		    if (employeeRequest.getDateOfJoining()==null)  {
-		    	employee.get().setDateOfJoining(employee.get().getDateOfJoining());
-		    }
-		    else {
-		    	 employee.get().setDateOfJoining(employeeRequest.getDateOfJoining());	
-		    }
-		    
-		    if (employeeRequest.getDateOfExit()==null) {
-		    	employee.get().setDateOfExit(employee.get().getDateOfExit());
-		    }
-		    else {
-		    	employee.get().setDateOfExit(employeeRequest.getDateOfExit());
-		    }
-		    employeeRepository.save(employee.get());
-	        return employee;
-	    }
+		
+		try {
+			Optional<Employee> employee = employeeRepository.findById(employeeId);
+			    if (employeeRequest.getFirstName()==null)    {
+			    	employee.get().setFirstName(employee.get().getFirstName());
+			    }
+			    else {
+			    	  employee.get().setFirstName(employeeRequest.getFirstName());	 	
+			    } 		 
+			    if (employeeRequest.getLastName()==null)    {
+			    	employee.get().setLastName (employee.get().getLastName());
+			    }
+			    else   {
+			      employee.get().setLastName(employeeRequest.getLastName());	
+			    }
+			    
+			    if (employeeRequest.getDesignation()==null) {
+			    	employee.get().setDesignation(employee.get().getDesignation());
+			    }
+			    else {
+			    	employee.get().setDesignation(employeeRequest.getDesignation());
+			    }
+			    
+			    if (employeeRequest.getDateOfJoining()==null)  {
+			    	employee.get().setDateOfJoining(employee.get().getDateOfJoining());
+			    }
+			    else {
+			    	 employee.get().setDateOfJoining(employeeRequest.getDateOfJoining());	
+			    }
+			    
+			    if (employeeRequest.getDateOfExit()==null) {
+			    	employee.get().setDateOfExit(employee.get().getDateOfExit());
+			    }
+			    else {
+			    	employee.get().setDateOfExit(employeeRequest.getDateOfExit());
+			    }
+			    employeeRepository.save(employee.get());
+		        return employee;
+		}
+		
+		catch(Exception e) {
+			throw new EmployeeException("Id does not exist : "+employeeId);
+		}
+		        
+	}
 
 	@Override
     @CacheEvict(value = "users",allEntries=true)
 	public void deleteEmployee(Integer id) {
-	      employeeRepository.deleteById(id);		
+		try {
+	      employeeRepository.deleteById(id);
+		}
+		
+		catch(Exception e) {
+			throw new EmployeeException("Id does not exist : "+id );
+		}
 	}
  
 	@Override
 	@Cacheable(value = "users", key = "#id")
 	public Employee getUser(Integer id) {
-		System.out.println("DB Call");
-		return employeeRepository.findById(id).get();
+		
+		try {
+			System.out.println("DB Call");
+			return employeeRepository.findById(id).get();
+		}
+		
+		catch(Exception e){
+			
+			throw new EmployeeException("Employee not found : "+id);
+		}
 	}
 	
 	//redis, Exceptions, UI(jwt Tokens) , Scala perf 
